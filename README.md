@@ -1,3 +1,4 @@
+This is the implementation of LResNet as residual connection in GNN architectures, where the base model is HyboNet from [Fully Hyperbolic Neural Networks].(https://arxiv.org/abs/2105.14686).
 # HyDIN
 
 HyDIN 是一个用于蛋白质相互作用预测（Protein-Protein Interaction, PPI）的图学习项目。当前实现将双曲空间图编码与门控图小波变换结合起来，对蛋白质节点进行表示学习，并在链路预测任务上输出 ROC-AUC、AP、F1、MCC 等指标。
@@ -24,7 +25,7 @@ HyDIN 是一个用于蛋白质相互作用预测（Protein-Protein Interaction, 
 - 两种训练方式：
   - 单次划分训练
   - K 折交叉验证
-- Top-K 新相互作用发现：输出预测分数最高的候选蛋白质对
+
 
 ## 目录结构
 
@@ -60,6 +61,22 @@ HyDIN/
 - `data/mat_drug_drug.txt`：`708 x 708`
 - `data/mat_drug_protein.txt`：`708 x 1512`
 - `data/zeng/`：另一套蛋白质相关数据与 `.mat` 文件
+
+## 数据来源与参考数据集
+
+当前项目中的数据组织方式与以下公开数据仓库有关：
+
+- DTINet（Luo dataset）：
+  - 仓库地址：<https://github.com/luoyunan/DTINet>
+  - 仓库说明：用于药物-靶点相互作用预测的异构网络集成数据与代码
+  - 公开数据中包含药物、蛋白质、疾病、副作用及多种关联矩阵，例如 `mat_drug_drug.txt`、`mat_drug_protein.txt`、`mat_protein_protein.txt`
+
+- deepDTnet（Zeng dataset）：
+  - 仓库地址：<https://github.com/ChengF-Lab/deepDTnet>
+  - 仓库说明：用于已知药物靶点识别的异构网络深度学习数据与代码
+  - 公开数据中包含 `proteinprotein.txt`、`proteinsim1network.txt` 到 `proteinsim4network.txt` 等文件
+
+
 
 如果你要替换自己的数据，至少需要保证默认输入文件满足下面的格式：
 
@@ -171,19 +188,4 @@ for epoch in range(5):
 
 如果你要引入药物、疾病或多模态关系，当前默认训练路径还不够，需要继续修改 `load_data_lp()` 与训练逻辑。
 
-## 已知事项
-
-- 当前仓库的原始 `README` 只有标题，本文件是根据现有代码结构重新整理的说明文档。
-- `train.py` 中存在“先解析参数，再手动覆盖参数”的行为。
-- 默认训练入口只使用蛋白质相关数据，未直接接入药物/疾病分支。
-- 代码中包含部分实验性逻辑与注释保留实现，适合在复现实验前先自行核对训练配置。
-
-## 建议的后续整理方向
-
-如果你准备继续维护这个项目，优先建议做下面几件事：
-
-1. 去掉 `train.py` 末尾对参数的硬编码覆盖
-2. 把训练 epoch 数改成真正可配置
-3. 将数据加载器拆成 PPI、DTI、多模态三套明确入口
-4. 补充实验配置、随机种子和结果复现说明
 
