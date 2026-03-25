@@ -14,7 +14,7 @@ This repository contains the implementation of **HyDIN** for protein-protein int
 - Hyperbolic structure encoding: `HyboNet` embeds node features in the Lorentz manifold to better match the hierarchical organization of PPI networks described in the paper
 - Multi-scale diffusion fusion: `GWTNet` in `models/models.py` propagates features across multiple diffusion scales and fuses them with gated weighting
 - Contrastive-learning utilities: `train.py` includes stochastic feature/graph augmentation and a hyperbolic contrastive objective for robustness under perturbation
-- Link prediction evaluation: supports ROC-AUC, AP, F1, and MCC
+- Link prediction evaluation: supports ROC-AUC, AP
 - Bootstrap statistics: evaluation computes confidence intervals and p-values
 - Two training modes:
   - single split training
